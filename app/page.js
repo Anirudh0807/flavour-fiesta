@@ -26,6 +26,7 @@ export default function Home() {
       ))}
 
       <Input
+        variant={"filled"}
         value={input}
         size={"lg"}
         placeholder="Enter the links"
