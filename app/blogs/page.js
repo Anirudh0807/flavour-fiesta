@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Button,
@@ -12,36 +13,65 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import { useEffect, useState } from "react";
 
 const page = () => {
-  const arr = [1, 2, 3, 4];
+
+  const [blogs, setBlogs] = useState([]); // Added state for storing blog data
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
+  async function getBlogs() {
+    try {
+      const res = await fetch("http://localhost:3001/getAllBlogs", {
+        method: "GET",
+        headers: {
+          mode: "no-cors",
+        },
+      });
+
+      const result = await res.json();
+      setBlogs(result);
+      console.log(result)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+    return formattedDate;
+  }
+
   return (
     <>
       <Flex direction={"row"} justifyContent={"center"}>
         <Box my={20}>
           <SimpleGrid columns={2} spacing={10}>
-            {arr.map((index) => (
-              <Card key={index} maxW="xl">
+            {blogs.map((item) => (
+              <Card key={item._id} maxW="xl">
                 <CardBody>
                   <Image
-                    src="https://www.animeexplained.com/wp-content/uploads/2023/03/JJK-season-2-visual.jpg"
-                    alt="Green double couch with wooden legs"
+                    src={item.image}
+                    alt={item.title}
                     borderRadius="lg"
                   />
                   <Stack mt="6" spacing="3">
                     <Heading size="md">Living room Sofa</Heading>
                     <Text>
-                      This sofa is perfect for modern tropical spaces, baroque
-                      inspired spaces, earthy toned spaces and for people who
-                      love a chic design with a sprinkle of vintage design.
+                      {item.content.length > 100
+                        ? item.content.substring(0, 100) + "..."
+                        : item.content}
                     </Text>
                   </Stack>
                 </CardBody>
                 <CardFooter>
                   <Flex justifyContent="space-around">
                     <Text>Arko is Gay</Text>
-                    <Text>25 October 2024</Text>
+                    <Text>{formatDate(item.createdAt)}</Text>
                   </Flex>
                 </CardFooter>
               </Card>
