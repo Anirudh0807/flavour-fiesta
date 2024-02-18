@@ -16,7 +16,7 @@ export default function Home() {
   };
 
   const handleGenerateBlog = () => {
-    sendBlogData()
+    sendBlogData();
   };
 
   async function getRecipeDetails(recipeName, maxRetries = 3) {
@@ -41,7 +41,11 @@ export default function Home() {
     console.log(data);
   }
 
-  async function sendBlogData(title, content, image = "https://imgur.com/a/xrMcyYH") {
+  async function sendBlogData(
+    title,
+    content,
+    image = "https://imgur.com/a/xrMcyYH"
+  ) {
     const response = await fetch(
       "https://blog-backend-dev-mfbj.2.sg-1.fl0.io/blog",
       {
