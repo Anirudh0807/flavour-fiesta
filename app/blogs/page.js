@@ -25,7 +25,7 @@ const page = () => {
 
   async function getBlogs() {
     try {
-      const res = await fetch("http://localhost:3001/getAllBlogs", {
+      const res = await fetch("https://blog-backend-dev-mfbj.2.sg-1.fl0.io/getAllBlogs", {
         method: "GET",
         headers: {
           mode: "no-cors",
@@ -60,7 +60,7 @@ const page = () => {
                     borderRadius="lg"
                   />
                   <Stack mt="6" spacing="3">
-                    <Heading size="md">Living room Sofa</Heading>
+                    <Heading size="md">{item.title}</Heading>
                     <Text>
                       {item.content.length > 100
                         ? item.content.substring(0, 100) + "..."

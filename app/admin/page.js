@@ -16,7 +16,7 @@ export default function Home() {
   };
 
   const handleGenerateBlog = () => {
-    sendBlogData();
+    getRecipeDetails(input);
   };
 
   async function getRecipeDetails(recipeName, maxRetries = 3) {
@@ -32,6 +32,8 @@ export default function Home() {
         }),
       }
     );
+    
+    console.log(response);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
